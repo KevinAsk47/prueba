@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import {View, StyleSheet, Text, TextInput, Button, Alert, TouchableOpacity} from 'react-native'
 import axios from 'axios'
 
-const Formulario = () => {
+const Formulario = (props) => {
     const [nuevoAmigo, setNuevoAmigo] = useState({
         nombre: '', edad: '', foto: ''
     })
@@ -20,7 +20,7 @@ const Formulario = () => {
             [
                 {text: 'SI', onPress: () => {
                     axios.post('https://appprueba2021.herokuapp.com/api/amigo', nuevoAmigo)
-                    .then(respuesta => console.log(respuesta))
+                    .then(respuesta => props.navigation.navigate('amigos'))
                 }},
                 {text: 'NO'}
             ]

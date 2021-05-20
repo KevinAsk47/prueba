@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from 'react'
-import {View, StyleSheet, Text, SafeAreaView, StatusBar, Image} from 'react-native'
+import {View, StyleSheet, Text, SafeAreaView, StatusBar, Image, Button, ScrollView} from 'react-native'
 
-const Amigos = () => {
+const Amigos = (props) => {
     const [amigos, setAmigos] = useState([])
 
     useEffect(() => {
-        fetch('https://appprueba2021.herokuapp.com/api/amigo')
-        .then(res => res.json())
-        .then(data => setAmigos(data.respuesta))
+        console.log("USEEFFECT")
+        props.navigation.addListener('focus', () => {
+            console.log("Estoy fetcheando")
+            fetch('https://appprueba2021.herokuapp.com/api/amigo')
+            .then(res => res.json())
+            .then(data => setAmigos(data.respuesta))
+        })
     }, [])
 
     return (
         <>
         <StatusBar barStyle="light-content" />
-        <View style={styles.granCaja}>
+        <ScrollView style={styles.granCaja}>
             <Text style={styles.texto}>AMIGOS</Text>
             {amigos.map(amigo => (
                 <View key={amigo._id} style={styles.amigo}>
@@ -21,7 +25,9 @@ const Amigos = () => {
                     <Text style={styles.textoAmigo}>{amigo.nombre} ({amigo.edad})</Text>
                 </View>
             ))}
-        </View>
+            <Button title="AGREGAR AMIGO" onPress={() => props.navigation.navigate('formulario') }/>
+            <Button title="VOLVER" onPress={() => props.navigation.navigate('welcome') }/>
+        </ScrollView>
         </>
     )
 }
@@ -30,7 +36,7 @@ const styles = StyleSheet.create({
     granCaja: {
       flex: 1,
       backgroundColor: '#61210B',
-      alignItems: 'center'
+    //   alignItems: 'center'
     },
     amigo: {
         flexDirection: 'row',

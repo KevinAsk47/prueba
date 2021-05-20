@@ -1,11 +1,13 @@
 import React from 'react'
-import {View, StyleSheet, Text, Image} from 'react-native'
+import {View, StyleSheet, Text, Image, Button} from 'react-native'
 
-const Welcome = () => {
+const Welcome = (props) => {
     return (
         <View style={styles.granCaja}>
+            <Button title="Menu" onPress={() => props.navigation.openDrawer()}/>
             <Image source={require('./assets/amigos.jpg')} style={styles.foto}/>
             <Text style={styles.titulo}>BIENVENIDOS A MI APP DE AMIGOS</Text>
+            <Button title="IR A LISTA DE AMIGOS" onPress={() => props.navigation.navigate('amigos')} />
         </View>
     )
 }
